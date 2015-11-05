@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/komodoo/komodoo-flightplan#readme",
   "devDependencies": {
+    "dotenv": "^1.2.0",
     "flightplan": "^0.6.6"
   }
 }

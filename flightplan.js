@@ -1,6 +1,8 @@
 require('dotenv').load();
 
-var plan = require('flightplan');
+var plan = require('flightplan'),
+    utils = require('./utils.js');
+
 
 plan.target('staging', {
   host: process.env.STAGING_HOST,
@@ -8,6 +10,8 @@ plan.target('staging', {
   agent: process.env.SSH_AUTH_SOCK
 });
 
+
 plan.local(function(local) {
-  local.log('Hello' + process.env.STAGING_USERNAME);
+  local.waitFor(utils.buildConfigs);
+  local.log("Done");
 });

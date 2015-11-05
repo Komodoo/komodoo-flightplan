@@ -23,6 +23,6 @@
   "devDependencies": {
     "dotenv": "^1.2.0",
     "flightplan": "^0.6.6",
-    "hogan": "^1.0.2",
+    "hogan": "^1.0.2"
   }
 }

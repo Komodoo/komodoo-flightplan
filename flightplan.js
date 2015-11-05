@@ -4,7 +4,7 @@ var plan = require('flightplan'),
     utils = require('./utils.js');
 
 
-plan.target('staging', {
+plan.target('x', {
   host: process.env.STAGING_HOST,
   username: process.env.STAGING_USERNAME,
   agent: process.env.SSH_AUTH_SOCK
@@ -17,7 +17,7 @@ plan.local(function(local) {
   local.debug('Config file built');
 
   local.debug('Start to send configs file');
-  local.transfer('./komodoo-discourse.yml.trusted', '/var/discourse/containers/app.yml');
+  local.transfer('./komodoo-discourse.yml', '/var/discourse/containers/');
 
   local.log('Config file sent to each targets');
 });

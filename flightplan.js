@@ -21,3 +21,35 @@ plan.local(function(local) {
 
   local.log('Config file sent to each targets');
 });
+
+
+plan.remote('deploy', function(remote) {
+  remote.debug('Move to discourse directory');
+  remote.with('cd /var/discourse/', function(){
+    remote.exec('./launcher bootstrap komodoo-discourse');
+  });
+});
+
+
+plan.remote('redeploy', function(remote) {
+  remote.debug('Move to discourse directory');
+  remote.with('cd /var/discourse/', function(){
+    remote.exec('./launcher rebuild komodoo-discourse');
+  });
+});
+
+
+plan.remote(['start', 'deploy', 'deploy'], function(remote) {
+  remote.debug('Move to discourse directory');
+  remote.with('cd /var/discourse/', function(){
+    remote.exec('./launcher start komodoo-discourse');
+  });
+});
+
+
+plan.remote('stop', function(remote) {
+  remote.debug('Move to discourse directory');
+  remote.with('cd /var/discourse/', function(){
+    remote.exec('./launcher ststopart komodoo-discourse');
+  });
+});

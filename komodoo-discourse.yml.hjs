@@ -29,7 +29,7 @@ expose:
 # docker_args:
 
 params:
-  db_default_text_search_config: "pg_catalog.english"
+  db_default_text_search_config: "pg_catalog.french"
 
   ## Set db_shared_buffers to a max of 25% of the total memory.
   ##
@@ -45,8 +45,8 @@ params:
   #version: tests-passed
 
 env:
-  LANG: en_US.UTF-8
-  # DISCOURSE_DEFAULT_LOCALE: en
+  LANG: fr_FR.UTF-8
+  DISCOURSE_DEFAULT_LOCALE: fr
 
   ## TODO: How many concurrent web requests are supported?
   ## With 2GB we recommend 3-4 workers, with 1GB only 2
@@ -54,13 +54,13 @@ env:
 
   ## TODO: List of comma delimited emails that will be made admin and developer
   ## on initial signup example 'user1@example.com,user2@example.com'
-  DISCOURSE_DEVELOPER_EMAILS: {{DISCOURSE_DEVELOPER_EMAILS}}
+  DISCOURSE_DEVELOPER_EMAILS: '{{DISCOURSE_DEVELOPER_EMAILS}}'
 
   ## TODO: The domain name this Discourse instance will respond to
-  DISCOURSE_HOSTNAME: {{DISCOURSE_HOSTNAME}}
+  DISCOURSE_HOSTNAME: '{{DISCOURSE_HOSTNAME}}'
 
   ## TODO: The mailserver this Discourse instance will use
-  DISCOURSE_SMTP_ADDRESS: smtp.example.com
+  DISCOURSE_SMTP_ADDRESS: in-v3.mailjet.com
   DISCOURSE_SMTP_PORT: 587
   DISCOURSE_SMTP_USER_NAME: {{DISCOURSE_SMTP_USER_NAME}}
   DISCOURSE_SMTP_PASSWORD: {{DISCOURSE_SMTP_PASSWORD}}
@@ -87,13 +87,15 @@ hooks:
         cmd:
           - mkdir -p plugins
           - git clone https://github.com/discourse/docker_manager.git
+          # - git clone https://github.com/sitepoint/discourse-theme.git
+          - git clone https://github.com/komodoo/komodoo-theme.git
 
 ## Remember, this is YAML syntax - you can only have one block with a name
 run:
   - exec: echo "Beginning of custom commands"
 
   ## If you want to set the 'From' email address for your first registration, uncomment and change:
-  #- exec: rails r "SiteSetting.notification_email='info@unconfigured.discourse.org'"
+  - exec: rails r "SiteSetting.notification_email='{{DISCOURSE_DEVELOPER_EMAILS}}'"
   ## After getting the first signup email, re-comment the line. It only needs to run once.
 
   ## If you want to configure password login for root, uncomment and change:

@@ -12,6 +12,12 @@ plan.target('staging', {
 
 
 plan.local(function(local) {
+  local.debug('Start to build configs file');
   local.waitFor(utils.buildConfigs);
-  local.log("Done");
+  local.debug('Config file built');
+
+  local.debug('Start to send configs file');
+  local.transfer('./komodoo-discourse.yml.trusted', '/var/discourse/containers/app.yml');
+
+  local.log('Config file sent to each targets');
 });
